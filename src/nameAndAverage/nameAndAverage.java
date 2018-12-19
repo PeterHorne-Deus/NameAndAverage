@@ -11,19 +11,25 @@ package nameAndAverage;
  */
 
 import java.io.*;
-public class nameAndAverage extends javax.swing.JFrame {
 
+
+public class nameAndAverage extends javax.swing.JFrame {
+        
+    
+    File dataFile = new File("scores.dat");
+    
+    
+    FileReader in;
+    BufferedReader readFile;
     /**
      * Creates new form nameAndAverage
      */
     public nameAndAverage() {
         initComponents();
+    
+        
     }
 
-    File dataFile = new File("names.dat");
-    FileWriter out;
-    BufferedWriter writeFile;
-    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -39,12 +45,12 @@ public class nameAndAverage extends javax.swing.JFrame {
         name3Lbl = new javax.swing.JLabel();
         averageBtn = new javax.swing.JButton();
         totalAverageLbl = new javax.swing.JLabel();
-        score1Lbl = new javax.swing.JTextField();
-        score4Lbl = new javax.swing.JTextField();
-        score3Lbl = new javax.swing.JTextField();
-        score2Lbl = new javax.swing.JTextField();
+        score1TxtField = new javax.swing.JTextField();
+        score4TxtField = new javax.swing.JTextField();
+        score3TxtField = new javax.swing.JTextField();
+        score2TxtField = new javax.swing.JTextField();
         namesLbl = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        scoreLbl = new javax.swing.JLabel();
         average4Lbl = new javax.swing.JLabel();
         average1Lbl = new javax.swing.JLabel();
         average2Lbl = new javax.swing.JLabel();
@@ -59,6 +65,11 @@ public class nameAndAverage extends javax.swing.JFrame {
         jPanel1.add(titleLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, -1, -1));
 
         nameBtn.setText("Get Names");
+        nameBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(nameBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -78,22 +89,27 @@ public class nameAndAverage extends javax.swing.JFrame {
         jPanel1.add(name3Lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
         averageBtn.setText("Calculate Average");
+        averageBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                averageBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(averageBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, -1, -1));
 
         totalAverageLbl.setText("Total Average:  ");
         jPanel1.add(totalAverageLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
-        jPanel1.add(score1Lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 70, -1));
-        jPanel1.add(score4Lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 70, -1));
-        jPanel1.add(score3Lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 70, -1));
-        jPanel1.add(score2Lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 70, -1));
+        jPanel1.add(score1TxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 70, -1));
+        jPanel1.add(score4TxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 70, -1));
+        jPanel1.add(score3TxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 70, -1));
+        jPanel1.add(score2TxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 70, -1));
 
         namesLbl.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         namesLbl.setText("Names:");
         jPanel1.add(namesLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel9.setText("Score out of 100");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, -1, -1));
+        scoreLbl.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        scoreLbl.setText("Score out of 100");
+        jPanel1.add(scoreLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, -1, -1));
 
         average4Lbl.setText("...");
         jPanel1.add(average4Lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
@@ -120,6 +136,78 @@ public class nameAndAverage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void nameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameBtnActionPerformed
+        int counter = 0;
+        String[] names = new String[4];
+        
+        try{
+            in = new FileReader(dataFile);
+            readFile = new BufferedReader(in);
+            
+            while ((names[counter] = readFile.readLine()) != null){
+                
+                if (counter == 0){
+                    name1Lbl.setText(names[counter]);
+                }
+                else if (counter == 1){
+                    name2lbl.setText(names[counter]);
+                }
+                else if (counter == 2){
+                    name3Lbl.setText(names[counter]);
+                }
+                else{
+                    name4Lbl.setText(names[counter]);
+                }
+                counter ++;
+            }
+            readFile.close();
+            in.close();
+        }
+        catch (FileNotFoundException e) {
+			System.out.println("File does not exist or could not be found.");
+			System.err.println("FileNotFoundException: " + e.getMessage());
+        } 
+        catch (IOException e) {
+			System.out.println("Problem reading file.");
+                        System.err.println("IOException: " + e.getMessage());
+    	}
+    }//GEN-LAST:event_nameBtnActionPerformed
+
+    private void averageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageBtnActionPerformed
+        int[] average = new int[4];
+        int counter = 0;
+        int total = 0;
+        
+        
+        while(counter < 4){
+            if (counter == 0 ){
+                average[counter] = Integer.parseInt(score1TxtField.getText()); 
+                average1Lbl.setText(String.valueOf(average[counter]));
+            }
+            else if (counter == 1){
+                average[counter] = Integer.parseInt(score2TxtField.getText()); 
+                average2Lbl.setText(String.valueOf(average[counter]));
+                }
+            else if (counter == 2){
+                average[counter] = Integer.parseInt(score3TxtField.getText()); 
+                average3Lbl.setText(String.valueOf(average[counter]));
+                }
+            else{
+                average[counter] = Integer.parseInt(score4TxtField.getText()); 
+                average4Lbl.setText(String.valueOf(average[counter]));
+                } 
+            counter ++;
+            
+            total = total + average[counter];
+        }
+        System.out.println("Test");
+        
+        total = total / 400;
+        totalAverageLbl.setText("test");
+        
+        System.out.println("did it work");
+    }//GEN-LAST:event_averageBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,7 +251,6 @@ public class nameAndAverage extends javax.swing.JFrame {
     private javax.swing.JLabel average4Lbl;
     private javax.swing.JButton averageBtn;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel name1Lbl;
     private javax.swing.JLabel name2lbl;
@@ -171,10 +258,11 @@ public class nameAndAverage extends javax.swing.JFrame {
     private javax.swing.JLabel name4Lbl;
     private javax.swing.JButton nameBtn;
     private javax.swing.JLabel namesLbl;
-    private javax.swing.JTextField score1Lbl;
-    private javax.swing.JTextField score2Lbl;
-    private javax.swing.JTextField score3Lbl;
-    private javax.swing.JTextField score4Lbl;
+    private javax.swing.JTextField score1TxtField;
+    private javax.swing.JTextField score2TxtField;
+    private javax.swing.JTextField score3TxtField;
+    private javax.swing.JTextField score4TxtField;
+    private javax.swing.JLabel scoreLbl;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JLabel totalAverageLbl;
     // End of variables declaration//GEN-END:variables
