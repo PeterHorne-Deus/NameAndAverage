@@ -16,11 +16,7 @@ import java.io.*;
 public class nameAndAverage extends javax.swing.JFrame {
         
     
-    File dataFile = new File("scores.dat");
     
-    
-    FileReader in;
-    BufferedReader readFile;
     /**
      * Creates new form nameAndAverage
      */
@@ -138,8 +134,14 @@ public class nameAndAverage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameBtnActionPerformed
+       File dataFile = new File("scores.dat");
+    
+    
+    FileReader in;
+    BufferedReader readFile;
+    
         int counter = 0;
-        String[] names = new String[4];
+        String[] names = new String[10];
         
         try{
             in = new FileReader(dataFile);
@@ -175,38 +177,46 @@ public class nameAndAverage extends javax.swing.JFrame {
     }//GEN-LAST:event_nameBtnActionPerformed
 
     private void averageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageBtnActionPerformed
-        int[] average = new int[4];
+        int[] average = new int[10];
         int counter = 0;
-        int total = 0;
+        double total = 0;
         
         
-        while(counter < 4){
+        
+        while(counter < 5){
+            
+            
             if (counter == 0 ){
                 average[counter] = Integer.parseInt(score1TxtField.getText()); 
                 average1Lbl.setText(String.valueOf(average[counter]));
+                total = average[counter];
             }
             else if (counter == 1){
                 average[counter] = Integer.parseInt(score2TxtField.getText()); 
                 average2Lbl.setText(String.valueOf(average[counter]));
+                total = total + average[counter];
                 }
             else if (counter == 2){
                 average[counter] = Integer.parseInt(score3TxtField.getText()); 
                 average3Lbl.setText(String.valueOf(average[counter]));
+                total = total + average[counter];
                 }
-            else{
+            else if (counter == 3){
                 average[counter] = Integer.parseInt(score4TxtField.getText()); 
                 average4Lbl.setText(String.valueOf(average[counter]));
+                total = total + average[counter];
                 } 
+            else{
+                total = total / 40;
+                total = total * 10;
+                totalAverageLbl.setText("Total Average: " + String.valueOf(total));
+            }
             counter ++;
             
-            total = total + average[counter];
+           
+           
         }
-        System.out.println("Test");
-        
-        total = total / 400;
-        totalAverageLbl.setText("test");
-        
-        System.out.println("did it work");
+             
     }//GEN-LAST:event_averageBtnActionPerformed
 
     /**
